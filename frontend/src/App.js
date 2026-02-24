@@ -5,7 +5,6 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import Config from './components/Config';
-import FileUpload from './components/FileUpload';
 import Layout from './components/Layout';
 
 function PrivateRoute({ children }) {
@@ -31,7 +30,6 @@ export default function App() {
           >
             <Route index element={<Dashboard />} />
             <Route path="config" element={<Config />} />
-            <Route path="semi" element={<FileUpload />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

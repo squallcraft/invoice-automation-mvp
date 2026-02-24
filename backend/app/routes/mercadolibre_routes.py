@@ -28,16 +28,11 @@ def _get_ml_credentials():
     return cid, secret, redirect_uri
 
 
-@ml_bp.route("/auth", methods=["GET"])
-@jwt_required()
-def start_auth():
-    """
-    Redirige al usuario a Mercado Libre para autorizar la app.
-    state = base64(user_id) para que el callback sepa a qué usuario asociar los tokens.
-    """
+def _build_ml_auth_url():
+    """Construye la URL de autorización ML con state=base64(user_id)."""
     client_id, _, redirect_uri = _get_ml_credentials()
     if not client_id or not redirect_uri:
-        return jsonify({"error": "ML_CLIENT_ID y ML_REDIRECT_URI deben estar configurados en el servidor"}), 500
+        return None, "ML_CLIENT_ID y ML_REDIRECT_URI deben estar configurados en el servidor"
     user_id = get_jwt_identity()
     state = base64.urlsafe_b64encode(str(user_id).encode()).decode().rstrip("=")
     auth_url = (
@@ -47,7 +42,33 @@ def start_auth():
         f"&redirect_uri={redirect_uri}"
         f"&state={state}"
     )
-    return redirect(auth_url)
+    return auth_url, None
+
+
+@ml_bp.route("/auth-url", methods=["GET"])
+@jwt_required()
+def auth_url():
+    """
+    GET: devuelve la URL de Mercado Libre para autorizar la app (para que el frontend redirija).
+    Evita problemas de CORS con redirect 302.
+    """
+    auth_url_val, err = _build_ml_auth_url()
+    if err:
+        return jsonify({"error": err}), 500
+    return jsonify({"url": auth_url_val})
+
+
+@ml_bp.route("/auth", methods=["GET"])
+@jwt_required()
+def start_auth():
+    """
+    Redirige al usuario a Mercado Libre para autorizar la app.
+    state = base64(user_id) para que el callback sepa a qué usuario asociar los tokens.
+    """
+    auth_url_val, err = _build_ml_auth_url()
+    if err:
+        return jsonify({"error": err}), 500
+    return redirect(auth_url_val)
 
 
 @ml_bp.route("/callback", methods=["GET"])
@@ -124,6 +145,21 @@ def _get_client_for_user(user_id_int):
     access_token = decrypt_value(user.ml_access_token_enc)
     # Opcional: si el token expiró (6h), usar refresh_token aquí
     return MercadoLibreClient(access_token), None
+
+
+@ml_bp.route("/disconnect", methods=["POST"])
+@jwt_required()
+def disconnect():
+    """Desconecta la cuenta de Mercado Libre del usuario (borra tokens)."""
+    user_id = int(get_jwt_identity())
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+    user.ml_access_token_enc = None
+    user.ml_refresh_token_enc = None
+    user.ml_user_id = None
+    db.session.commit()
+    return jsonify({"message": "Mercado Libre desconectado"})
 
 
 @ml_bp.route("/orders", methods=["GET"])

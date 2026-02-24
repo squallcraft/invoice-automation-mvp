@@ -11,7 +11,7 @@ Ref: https://developers.mercadolibre.com.ar/en_us/upload-invoices
 
 import logging
 import requests
-from typing import Optional, List, Dict, Any
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -61,6 +61,58 @@ class MercadoLibreClient:
         except requests.RequestException as e:
             logger.exception("ML get_order error: %s", e)
             return {"success": False, "error": str(e)}
+
+    def get_fiscal_documents(self, pack_id: str) -> Dict[str, Any]:
+        """
+        GET /packs/{pack_id}/fiscal_documents
+        Obtiene los IDs de documentos fiscales ya cargados en el pack.
+        - 200 y fiscal_documents no vacío = ya hay documento en ML.
+        - 404 o fiscal_documents vacío = no hay documento.
+        """
+        try:
+            url = f"{API_BASE}/packs/{pack_id}/fiscal_documents"
+            resp = requests.get(url, headers=self._headers, timeout=15)
+            if resp.status_code == 404:
+                return {"success": True, "data": {"fiscal_documents": []}}
+            resp.raise_for_status()
+            data = resp.json()
+            docs = data.get("fiscal_documents") if isinstance(data, dict) else []
+            if not isinstance(docs, list):
+                docs = []
+            return {"success": True, "data": {"fiscal_documents": docs, "pack_id": data.get("pack_id")}}
+        except requests.RequestException as e:
+            logger.exception("ML get_fiscal_documents error: %s", e)
+            err_body = {}
+            if hasattr(e, "response") and e.response is not None:
+                try:
+                    err_body = e.response.json()
+                except Exception:
+                    pass
+            return {"success": False, "error": str(e), "response": err_body}
+
+    def fiscal_document_uploaded(self, pack_id: str) -> Optional[bool]:
+        """
+        Comprueba si en Mercado Libre ya existe un documento fiscal cargado para este pack.
+        Primera comprobación obligatoria antes de volver a emitir/subir.
+        - True: ya hay documento en ML → no reemitir.
+        - False: no hay documento en ML.
+        - None: no se pudo comprobar (red, 403, etc.).
+        """
+        result = self.get_fiscal_documents(pack_id)
+        if not result.get("success"):
+            return None
+        docs = (result.get("data") or {}).get("fiscal_documents") or []
+        return True if docs else False
+
+    def fiscal_document_uploaded_for_order(self, order_id: str) -> Optional[bool]:
+        """
+        Comprueba si la orden ya tiene documento fiscal en ML. Resuelve pack_id vía GET /orders/{id}.
+        """
+        order_resp = self.get_order(order_id)
+        if not order_resp.get("success"):
+            return None
+        pack_id = order_resp.get("pack_id") or order_id
+        return self.fiscal_document_uploaded(str(pack_id))
 
     def upload_fiscal_document(self, pack_id: str, pdf_content: bytes, filename: str = "factura.pdf") -> Dict[str, Any]:
         """

@@ -4,6 +4,7 @@ Flujo semi-automático: subir Excel/CSV, validar, previsualizar, emitir en lote 
 import io
 import zipfile
 import logging
+from datetime import datetime
 from flask import Blueprint, request, jsonify, send_file
 from flask_jwt_extended import jwt_required, get_jwt_identity
 import pandas as pd
@@ -138,6 +139,8 @@ def process_batch():
                     monto=monto,
                     tipo_doc=tipo_doc,
                     status="Pendiente",
+                    platform="Manual",
+                    document_date=datetime.utcnow().date(),
                 )
                 db.session.add(sale)
                 db.session.flush()
@@ -145,6 +148,8 @@ def process_batch():
             result = haulmer.emit_document(tipo_doc=tipo_doc, id_venta=id_venta, monto=monto)
             if result.get("success"):
                 sale.status = "Éxito"
+                if not sale.document_date:
+                    sale.document_date = datetime.utcnow().date()
                 doc = Document(
                     user_id=user.id,
                     sale_id=sale.id,

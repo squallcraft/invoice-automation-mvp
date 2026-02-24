@@ -17,6 +17,16 @@
   align-items: center;
 }
 
+.dashboard-search {
+  padding: 0.5rem 0.75rem;
+  min-width: 220px;
+  background: var(--slack-panel-bg);
+  border: 1px solid var(--slack-border);
+  border-radius: 6px;
+  color: var(--slack-text);
+  font-size: 0.9rem;
+}
+
 .dashboard-toolbar select {
   padding: 0.5rem 0.75rem;
   background: var(--slack-panel-bg);
@@ -39,6 +49,84 @@
 
 .dashboard-toolbar button:hover {
   background: var(--slack-accent-hover);
+}
+
+.dashboard-btn-process {
+  margin-left: 0.5rem;
+  background: #2c5282;
+  color: var(--slack-white);
+}
+
+.dashboard-btn-process:hover:not(:disabled) {
+  background: #2b6cb0;
+}
+
+.dashboard-btn-process:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.dashboard-result {
+  margin: 0.75rem 0;
+  padding: 0.6rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.dashboard-result-ok {
+  background: rgba(46, 184, 134, 0.15);
+  color: var(--slack-accent);
+}
+
+.dashboard-result-error {
+  background: rgba(218, 54, 51, 0.12);
+  color: #e74c3c;
+}
+
+.dashboard-result-errors {
+  opacity: 0.9;
+}
+
+.dashboard-legend {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--slack-text-muted);
+  line-height: 1.45;
+}
+
+.dashboard-legend strong {
+  color: var(--slack-text);
+}
+
+.th-sortable {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.th-sortable:hover {
+  color: var(--slack-text);
+}
+
+.th-checkbox,
+.td-checkbox {
+  width: 2.5rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.th-checkbox input,
+.td-checkbox input {
+  cursor: pointer;
+}
+
+.td-checkbox input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.dashboard-table tbody tr.row-selected {
+  background: rgba(46, 184, 134, 0.08);
 }
 
 .dashboard-error {
@@ -103,8 +191,42 @@
   background: var(--slack-accent-hover);
 }
 
-.dashboard-total {
+.dashboard-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
   padding: 0.75rem 1rem;
+  border-top: 1px solid var(--slack-border);
+}
+
+.dashboard-total {
   color: var(--slack-text-muted);
   font-size: 0.9rem;
+}
+
+.dashboard-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dashboard-pagination-controls button {
+  padding: 0.4rem 0.75rem;
+  background: var(--slack-panel-bg);
+  border: 1px solid var(--slack-border);
+  border-radius: 6px;
+  color: var(--slack-text);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.dashboard-pagination-controls button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.dashboard-pagination-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

@@ -1,84 +1,259 @@
-.config {
-  padding: 1.5rem 2rem;
-  max-width: 520px;
+.config-page {
+  padding: 0 2rem 2rem;
+  max-width: 900px;
 }
 
-.config h1 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--slack-white);
-}
-
-.config-desc {
-  color: var(--slack-text-muted);
-  margin-bottom: 1.25rem;
-  font-size: 0.95rem;
-  line-height: 1.45;
-}
-
-.config-status {
+.config-banner {
+  background: #ffe600;
+  margin: 0 -2rem 1.5rem;
+  padding: 0.85rem 2rem;
   display: flex;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-  padding: 0.75rem 1rem;
-  background: var(--slack-panel-bg);
-  border-radius: 8px;
-  border: 1px solid var(--slack-border);
-  color: var(--slack-text-muted);
-  font-size: 0.9rem;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.config-form label {
-  display: block;
-  margin-bottom: 1rem;
-  color: var(--slack-text);
-  font-size: 0.9rem;
-}
-
-.config-form input {
-  width: 100%;
-  padding: 0.65rem 0.85rem;
-  margin-top: 0.35rem;
-  background: var(--slack-panel-bg);
-  border: 1px solid var(--slack-border);
-  border-radius: 6px;
-  color: var(--slack-text);
-  font-size: 0.95rem;
-  box-sizing: border-box;
-}
-
-.config-form input:focus {
-  outline: none;
-  border-color: var(--slack-accent);
-}
-
-.config-form button {
-  padding: 0.65rem 1.25rem;
-  background: var(--slack-accent);
-  color: var(--slack-white);
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.95rem;
-  margin-top: 0.5rem;
-}
-
-.config-form button:hover:not(:disabled) {
-  background: var(--slack-accent-hover);
-}
-
-.config-form button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.config-banner-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #2e7d32;
 }
 
 .config-message {
-  margin-top: 0.75rem;
+  margin-bottom: 1rem;
   padding: 0.6rem 0.85rem;
   border-radius: 6px;
   background: rgba(46, 184, 134, 0.15);
   color: var(--slack-accent);
   font-size: 0.9rem;
+}
+
+.config-message-error {
+  background: rgba(218, 54, 51, 0.15);
+  color: #e74c3c;
+}
+
+.config-card {
+  background: var(--slack-panel-bg);
+  border: 1px solid var(--slack-border);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.config-card-title {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--slack-text);
+}
+
+.config-card-title-falabella {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.config-falabella-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #ff6600;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.25rem;
+  border-radius: 6px;
+}
+
+.config-card-instructions,
+.config-card-desc {
+  color: var(--slack-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0 0 1rem 0;
+}
+
+.config-card-instructions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.config-ml-block {
+  margin-top: 0.75rem;
+}
+
+.config-ml-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.config-ml-label {
+  min-width: 120px;
+  color: var(--slack-text-muted);
+  font-size: 0.9rem;
+}
+
+.config-ml-value {
+  color: var(--slack-text);
+  font-weight: 500;
+}
+
+.config-ml-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.config-btn-ml-plus {
+  padding: 0.5rem 1rem;
+  background: #ffe600;
+  color: #1a1a1a;
+  border: 1px solid #e6d900;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.config-btn-ml-plus:hover {
+  background: #fff033;
+}
+
+.config-btn-ml-disconnect {
+  background: transparent;
+  color: var(--slack-text-muted);
+  border-color: var(--slack-border);
+  font-weight: 600;
+}
+
+.config-btn-ml-disconnect:hover {
+  background: rgba(218, 54, 51, 0.15);
+  color: #e74c3c;
+  border-color: #e74c3c;
+}
+
+.config-ml-table-wrap {
+  overflow-x: auto;
+  margin-top: 0.5rem;
+}
+
+.config-ml-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.config-ml-table thead {
+  background: #ffe600;
+  color: #1a1a1a;
+}
+
+.config-ml-table th {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  font-weight: 600;
+}
+
+.config-ml-table td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--slack-border);
+  color: var(--slack-text);
+}
+
+.config-status-ok {
+  color: #2e7d32;
+  font-weight: 700;
+}
+
+.config-btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem 0.4rem;
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+.config-btn-icon:hover {
+  opacity: 1;
+}
+
+.config-btn-danger {
+  color: #c53030;
+}
+
+.config-btn-ml {
+  padding: 0.6rem 1.1rem;
+  background: #ffe600;
+  color: #1a1a1a;
+  border: 1px solid #e6d900;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.config-btn-ml:hover {
+  background: #fff033;
+}
+
+.config-form-inline .config-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.config-form-inline label {
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+  font-size: 0.9rem;
+  color: var(--slack-text);
+}
+
+.config-input {
+  padding: 0.5rem 0.65rem;
+  margin-top: 0.25rem;
+  background: var(--slack-bg);
+  border: 1px solid var(--slack-border);
+  border-radius: 6px;
+  color: var(--slack-text);
+  font-size: 0.95rem;
+  min-width: 180px;
+}
+
+.config-input-wide {
+  min-width: 280px;
+}
+
+.config-form-actions {
+  margin-left: auto;
+  align-self: flex-end;
+}
+
+.config-btn-send {
+  padding: 0.55rem 1rem;
+  background: #2b6cb0;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.config-btn-send:hover:not(:disabled) {
+  background: #2c5282;
+}
+
+.config-btn-send:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }

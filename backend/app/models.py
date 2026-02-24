@@ -1,8 +1,9 @@
 """
 Modelos de base de datos - PostgreSQL con SQLAlchemy.
 Idempotencia: id_venta único por usuario para evitar duplicados.
+Ventas: plataforma fuente, estado, fecha documento, validación de carga en marketplace.
 """
-from datetime import datetime
+from datetime import datetime, date
 from app import db
 
 
@@ -29,11 +30,19 @@ class Sale(db.Model):
     __tablename__ = "sales"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    id_venta = db.Column(db.String(120), nullable=False)  # ID externo (Falabella, etc.)
+    # Plataforma fuente (primera columna para la vista usuario): Falabella | Mercado Libre | Manual
+    platform = db.Column(db.String(32), nullable=False, default="Manual")
+    id_venta = db.Column(db.String(120), nullable=False)  # ID externo (Falabella, ML, etc.)
     monto = db.Column(db.Numeric(12, 2), nullable=False)
     tipo_doc = db.Column(db.String(20), nullable=False)  # 'Boleta' | 'Factura'
-    status = db.Column(db.String(20), nullable=False, default="Pendiente")  # Pendiente | Éxito | Error
+    # Estado actual de la venta
+    status = db.Column(db.String(32), nullable=False, default="Pendiente")  # Pendiente | Éxito | Error
     error_message = db.Column(db.Text, nullable=True)
+    # Fecha del documento (emisión o de la orden)
+    document_date = db.Column(db.Date, nullable=True)
+    # Validación de carga en marketplace: cuándo se subió correctamente el documento
+    document_uploaded_at = db.Column(db.DateTime, nullable=True)
+    upload_platform_response = db.Column(db.Text, nullable=True)  # Respuesta de la plataforma (opcional)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

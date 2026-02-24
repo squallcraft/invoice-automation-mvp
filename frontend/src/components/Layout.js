@@ -4,8 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import './Layout.css';
 
 const navItems = [
-  { to: '/', label: 'Inicio', icon: '◆' },
-  { to: '/semi', label: 'Subir Excel / CSV', icon: '↑' },
+  { to: '/', label: 'Ventas', icon: '📋' },
   { to: '/config', label: 'Configuración', icon: '⚙' },
 ];
 

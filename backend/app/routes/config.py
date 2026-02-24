@@ -28,6 +28,7 @@ def keys():
             "falabella_configured": bool(user.falabella_api_key_enc and user.falabella_user_id),
             "falabella_user_id": user.falabella_user_id or "",
             "mercado_libre_configured": bool(user.ml_access_token_enc),
+            "ml_user_id": (user.ml_user_id or "") if user.ml_access_token_enc else "",
         })
 
     data = request.get_json() or {}
@@ -42,4 +43,5 @@ def keys():
         "message": "Credenciales actualizadas",
         "haulmer_configured": bool(user.haulmer_api_key_enc),
         "falabella_configured": bool(user.falabella_api_key_enc and user.falabella_user_id),
+        "mercado_libre_configured": bool(user.ml_access_token_enc),
     })

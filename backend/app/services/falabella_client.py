@@ -285,6 +285,33 @@ class FalabellaClient:
         except ValueError:
             return {"success": False, "error": "Invalid JSON response", "response": {}}
 
+    def invoice_uploaded(self, order_id: str) -> Optional[bool]:
+        """
+        Comprueba si en Falabella ya existe un documento tributario cargado para esta orden.
+        Primera comprobación obligatoria antes de volver a emitir/subir.
+        - True: ya hay documento en Falabella → no reemitir.
+        - False: no hay documento en Falabella.
+        - None: no se pudo comprobar (API no disponible o error).
+        """
+        try:
+            # Intentar API principal: GetInvoice (si Falabella lo expone)
+            params = self._base_params("GetInvoice")
+            params["OrderId"] = str(order_id)
+            result = self._request(params)
+            if result.get("success"):
+                body = result.get("data", {}).get("Body") or result.get("data", {})
+                if body and (body.get("InvoiceNumber") or body.get("Document") or body.get("File")):
+                    return True
+                return False
+            err = result.get("error", "")
+            code = result.get("error_code")
+            if code == "E035" or "not found" in (err or "").lower():
+                return False
+            return None
+        except Exception as e:
+            logger.debug("invoice_uploaded check failed for order %s: %s", order_id, e)
+            return None
+
 
 def parse_order_items_response(result: Dict[str, Any]) -> List[Dict[str, Any]]:
     """Extrae lista de OrderItem desde la respuesta de GetOrderItems."""

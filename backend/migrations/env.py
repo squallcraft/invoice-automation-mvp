@@ -10,7 +10,15 @@ from app.models import User, Sale, Document
 from alembic import context
 
 config = context.config
-fileConfig(config.config_file_name) if config.config_file_name else None
+# alembic.ini está en la raíz del backend, no dentro de migrations/
+config_ini = config.config_file_name
+if config_ini and not os.path.isabs(config_ini):
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    candidate = os.path.join(root, "alembic.ini")
+    if os.path.isfile(candidate):
+        config_ini = candidate
+if config_ini and os.path.isfile(config_ini):
+    fileConfig(config_ini)
 app = create_app()
 target_metadata = db.metadata
 

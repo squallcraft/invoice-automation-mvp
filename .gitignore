@@ -1,0 +1,17 @@
+# Env and secrets
+.env
+*.pyc
+__pycache__/
+venv/
+.venv/
+node_modules/
+
+# Build and IDE
+frontend/build/
+*.log
+.idea/
+.vscode/
+
+# DB
+*.db
+*.sqlite3

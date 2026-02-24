@@ -1,84 +1,110 @@
+.dashboard {
+  padding: 1.5rem 2rem;
+  max-width: 1000px;
+}
+
 .dashboard h1 {
-  margin-bottom: 1rem;
-  color: #e94560;
+  margin: 0 0 1.25rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--slack-white);
 }
 
 .dashboard-toolbar {
   display: flex;
   gap: 0.75rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  align-items: center;
 }
 
 .dashboard-toolbar select {
   padding: 0.5rem 0.75rem;
-  background: #1a1a2e;
-  border: 1px solid #16213e;
+  background: var(--slack-panel-bg);
+  border: 1px solid var(--slack-border);
   border-radius: 6px;
-  color: #e0e0e0;
+  color: var(--slack-text);
+  font-size: 0.9rem;
 }
 
 .dashboard-toolbar button {
   padding: 0.5rem 1rem;
-  background: #e94560;
-  color: white;
+  background: var(--slack-accent);
+  color: var(--slack-white);
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.dashboard-toolbar button:hover {
+  background: var(--slack-accent-hover);
 }
 
 .dashboard-error {
-  background: rgba(233, 69, 96, 0.2);
-  color: #e94560;
-  padding: 0.75rem;
+  background: rgba(224, 30, 90, 0.15);
+  color: #f87171;
+  padding: 0.75rem 1rem;
   border-radius: 8px;
   margin-bottom: 1rem;
+  font-size: 0.9rem;
 }
 
 .dashboard-table-wrap {
   overflow-x: auto;
   border-radius: 8px;
-  border: 1px solid #16213e;
+  border: 1px solid var(--slack-border);
+  background: var(--slack-panel-bg);
 }
 
 .dashboard-table {
   width: 100%;
   border-collapse: collapse;
-  background: #1a1a2e;
 }
 
 .dashboard-table th,
 .dashboard-table td {
   padding: 0.75rem 1rem;
   text-align: left;
-  border-bottom: 1px solid #16213e;
+  border-bottom: 1px solid var(--slack-border);
 }
 
 .dashboard-table th {
-  background: #16213e;
-  color: #a2a8b8;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--slack-text-muted);
   font-weight: 600;
+  font-size: 0.85rem;
 }
 
 .dashboard-table tbody tr:hover {
-  background: #0f3460;
+  background: rgba(255, 255, 255, 0.03);
 }
 
-.status-ok { color: #4ade80; }
+.dashboard-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.status-ok { color: var(--slack-accent); }
 .status-error { color: #f87171; }
-.status-pending { color: #fbbf24; }
+.status-pending { color: var(--slack-yellow); }
 
 .btn-retry {
   padding: 0.35rem 0.65rem;
   font-size: 0.8rem;
-  background: #e94560;
-  color: white;
+  background: var(--slack-accent);
+  color: var(--slack-white);
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-retry:hover {
+  background: var(--slack-accent-hover);
 }
 
 .dashboard-total {
   padding: 0.75rem 1rem;
-  color: #a2a8b8;
+  color: var(--slack-text-muted);
   font-size: 0.9rem;
 }

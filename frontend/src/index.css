@@ -1,0 +1,41 @@
+/* Slack-inspired base */
+:root {
+  --slack-sidebar: #3f0e40;
+  --slack-sidebar-hover: #350d36;
+  --slack-sidebar-active: #1164a3;
+  --slack-main-bg: #1a1d21;
+  --slack-panel-bg: #2c2d30;
+  --slack-text: #d1d2d3;
+  --slack-text-muted: #8b8c8f;
+  --slack-accent: #2eb886;
+  --slack-accent-hover: #2ca876;
+  --slack-border: #3d3e42;
+  --slack-white: #ffffff;
+  --slack-red: #e01e5a;
+  --slack-yellow: #ecb22e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--slack-main-bg);
+  color: var(--slack-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--slack-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+input, button, select, textarea {
+  font-family: inherit;
+}

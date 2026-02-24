@@ -3,50 +3,65 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  background: var(--slack-main-bg);
+  padding: 1rem;
 }
 
 .auth-card {
-  background: #0f3460;
-  padding: 2rem;
+  background: var(--slack-panel-bg);
+  padding: 2.25rem;
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--slack-border);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
   width: 100%;
-  max-width: 380px;
+  max-width: 400px;
 }
 
 .auth-card h1 {
   margin: 0 0 0.25rem 0;
-  color: #e94560;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--slack-white);
 }
 
 .auth-card .subtitle {
-  color: #a2a8b8;
+  color: var(--slack-text-muted);
   margin-bottom: 1.5rem;
+  font-size: 0.95rem;
 }
 
 .auth-card form input {
   width: 100%;
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
-  border: 1px solid #16213e;
+  border: 1px solid var(--slack-border);
   border-radius: 8px;
-  background: #1a1a2e;
-  color: #eee;
+  background: var(--slack-main-bg);
+  color: var(--slack-text);
+  font-size: 0.95rem;
   box-sizing: border-box;
+}
+
+.auth-card form input:focus {
+  outline: none;
+  border-color: var(--slack-accent);
 }
 
 .auth-card form button {
   width: 100%;
   padding: 0.75rem;
-  background: #e94560;
-  color: white;
+  background: var(--slack-accent);
+  color: var(--slack-white);
   border: none;
   border-radius: 8px;
   font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
   margin-top: 0.5rem;
+}
+
+.auth-card form button:hover:not(:disabled) {
+  background: var(--slack-accent-hover);
 }
 
 .auth-card form button:disabled {
@@ -55,8 +70,8 @@
 }
 
 .auth-error {
-  background: rgba(233, 69, 96, 0.2);
-  color: #e94560;
+  background: rgba(224, 30, 90, 0.15);
+  color: #f87171;
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
   margin-bottom: 1rem;
@@ -66,12 +81,12 @@
 .auth-link {
   margin-top: 1.25rem;
   text-align: center;
-  color: #a2a8b8;
+  color: var(--slack-text-muted);
   font-size: 0.9rem;
 }
 
 .auth-link a {
-  color: #e94560;
+  color: var(--slack-accent);
   text-decoration: none;
 }
 

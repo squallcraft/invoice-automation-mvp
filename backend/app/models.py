@@ -18,6 +18,7 @@ class User(db.Model):
     ml_access_token_enc = db.Column(db.LargeBinary, nullable=True)
     ml_refresh_token_enc = db.Column(db.LargeBinary, nullable=True)
     ml_user_id = db.Column(db.String(64), nullable=True)  # ML user_id numérico
+    is_admin = db.Column(db.Boolean, default=False, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     sales = db.relationship("Sale", backref="user", lazy="dynamic")

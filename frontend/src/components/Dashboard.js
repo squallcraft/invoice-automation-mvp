@@ -46,7 +46,7 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard">
-      <h1>Historial de ventas</h1>
+      <h1>Ventas</h1>
       <div className="dashboard-toolbar">
         <select
           value={statusFilter}

@@ -1,33 +1,143 @@
-.file-upload h1 { margin-bottom: 0.5rem; color: #e94560; }
-.file-upload-desc { color: #a2a8b8; margin-bottom: 1.5rem; font-size: 0.95rem; }
-.file-upload-desc strong { color: #c0c0c0; }
+.file-upload {
+  padding: 1.5rem 2rem;
+  max-width: 720px;
+}
+
+.file-upload h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--slack-white);
+}
+
+.file-upload-desc {
+  color: var(--slack-text-muted);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.file-upload-desc strong {
+  color: var(--slack-text);
+}
 
 .dropzone {
-  border: 2px dashed #16213e;
+  border: 2px dashed var(--slack-border);
   border-radius: 12px;
   padding: 2rem;
   text-align: center;
-  color: #a2a8b8;
+  color: var(--slack-text-muted);
   cursor: pointer;
   position: relative;
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+  background: var(--slack-panel-bg);
 }
+
 .dropzone:hover,
-.dropzone-active { border-color: #e94560; background: rgba(233, 69, 96, 0.05); color: #e0e0e0; }
-.dropzone-input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+.dropzone-active {
+  border-color: var(--slack-accent);
+  background: rgba(46, 184, 134, 0.08);
+  color: var(--slack-text);
+}
 
-.file-upload-errors { color: #f87171; margin: 1rem 0; padding-left: 1.25rem; }
-.file-upload h2 { margin: 1.5rem 0 0.75rem; font-size: 1.1rem; color: #c0c0c0; }
-.preview-table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid #16213e; margin-bottom: 0.75rem; }
-.preview-table { width: 100%; border-collapse: collapse; background: #1a1a2e; }
-.preview-table th, .preview-table td { padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid #16213e; }
-.preview-table th { background: #16213e; color: #a2a8b8; }
-.preview-valid { margin-bottom: 1rem; font-size: 0.9rem; }
-.preview-valid:has(+ .btn-process:not([disabled])) { color: #4ade80; }
-.btn-process { padding: 0.75rem 1.5rem; background: #e94560; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
-.btn-process:disabled { opacity: 0.6; cursor: not-allowed; }
+.dropzone-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+}
 
-.file-upload-result { margin-top: 1.5rem; padding: 1rem; background: #1a1a2e; border-radius: 8px; border: 1px solid #16213e; }
-.file-upload-result h3 { margin-top: 0; color: #e94560; }
-.file-upload-result .result-error { color: #f87171; }
-.file-upload-result a { color: #e94560; }
+.file-upload-errors {
+  color: #f87171;
+  margin: 1rem 0;
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+}
+
+.file-upload h2 {
+  margin: 1.5rem 0 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--slack-text);
+}
+
+.preview-table-wrap {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--slack-border);
+  margin-bottom: 0.75rem;
+  background: var(--slack-panel-bg);
+}
+
+.preview-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.preview-table th,
+.preview-table td {
+  padding: 0.6rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--slack-border);
+}
+
+.preview-table th {
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--slack-text-muted);
+  font-size: 0.85rem;
+}
+
+.preview-valid {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: var(--slack-text-muted);
+}
+
+.btn-process {
+  padding: 0.75rem 1.5rem;
+  background: var(--slack-accent);
+  color: var(--slack-white);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.btn-process:hover:not(:disabled) {
+  background: var(--slack-accent-hover);
+}
+
+.btn-process:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.file-upload-result {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  background: var(--slack-panel-bg);
+  border-radius: 8px;
+  border: 1px solid var(--slack-border);
+}
+
+.file-upload-result h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.1rem;
+  color: var(--slack-white);
+}
+
+.file-upload-result .result-error {
+  color: #f87171;
+}
+
+.file-upload-result a {
+  color: var(--slack-accent);
+}
+
+.file-upload-result ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+  color: var(--slack-text-muted);
+  font-size: 0.9rem;
+}

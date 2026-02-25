@@ -30,13 +30,19 @@ docker compose build --no-cache
 docker compose up -d
 ```
 
-**4. Si hubo cambios en la base de datos (migraciones)**
+Si el **build del frontend** falla en `npm install` (exit code 1), el Dockerfile ya incluye `--legacy-peer-deps` y más memoria. Asegúrate de tener `git pull` reciente y vuelve a ejecutar `docker compose build --no-cache frontend`. Si sigue fallando, en el servidor prueba: `docker compose build --no-cache frontend 2>&1` y revisa el mensaje de error de npm.
+
+**4. Si ves "password authentication failed for user postgres"**
+
+El volumen de Postgres se creó con otra contraseña. Hay que recrear la base (ver sección *Crear una base de datos nueva* más abajo): `docker compose down` → borrar el volumen `invoice-automation-mvp_pgdata` → `docker compose up -d` → luego migraciones y admin.
+
+**5. Si hubo cambios en la base de datos (migraciones)**
 
 ```bash
 docker compose exec backend flask db upgrade
 ```
 
-**5. Listo**
+**6. Listo**
 
 Abre en el navegador **https://app.TU_DOMINIO**. Si no ves los cambios, haz **recarga forzada** (Ctrl+Shift+R o Cmd+Shift+R) para que cargue el frontend nuevo.
 

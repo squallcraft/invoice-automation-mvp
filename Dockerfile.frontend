@@ -1,8 +1,10 @@
 # Frontend - build estático para servir con nginx o desde backend
-FROM node:18-alpine AS builder
+FROM node:18-slim AS builder
 WORKDIR /app
+# Evitar OOM; omitir deps opcionales (p. ej. fsevents) que fallan en Linux
+ENV NODE_OPTIONS=--max-old-space-size=4096
 COPY frontend/package*.json ./
-RUN npm install
+RUN npm install --legacy-peer-deps --omit=optional --no-audit --no-fund
 COPY frontend/ .
 ENV REACT_APP_API_URL=/api
 RUN npm run build

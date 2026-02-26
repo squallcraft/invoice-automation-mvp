@@ -1,6 +1,6 @@
 """
 Punto de entrada: crear app y ejecutar (desarrollo).
-Producción: gunicorn -w 4 -b 0.0.0.0:5000 "app.app:create_app()"
+Producción: gunicorn -w 1 --timeout 120 -b 0.0.0.0:5000 "app.app:app"
 """
 import os
 from dotenv import load_dotenv

@@ -225,7 +225,7 @@ En la Terminal **del servidor** (donde tienes abierto `nano backend/.env`):
 2. Cambia estas líneas para que queden así (**cambia TU_DOMINIO por tu dominio real**, ej. `boletas.cl`):
 
    - `FLASK_ENV=production`
-   - `DATABASE_URL=postgresql://postgres:postgres@db:5432/invoice_automation`
+   - **No pongas `DATABASE_URL`** en este archivo cuando uses Docker; el `docker-compose.yml` ya la define (postgres:postgres@db).
    - `FRONTEND_URL=https://app.TU_DOMINIO`
    - `ML_REDIRECT_URI=https://app.TU_DOMINIO/api/mercado-libre/callback`
    - `ML_AUTH_BASE=https://auth.mercadolibre.com.ar`

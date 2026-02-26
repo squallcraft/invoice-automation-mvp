@@ -67,7 +67,9 @@ export default function Config() {
         }
       })
       .catch((err) => {
-        setMessage(err.response?.status === 401 ? 'Sesión expirada. Vuelve a iniciar sesión.' : 'No se pudo conectar con Mercado Libre.');
+        const msg = err.response?.data?.error
+          || (err.response?.status === 401 ? 'Sesión expirada. Vuelve a iniciar sesión.' : 'No se pudo conectar con Mercado Libre.');
+        setMessage(msg);
         setMessageType('error');
       });
   };

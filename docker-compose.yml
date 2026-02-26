@@ -1,3 +1,6 @@
+# Nombre fijo del proyecto para que el volumen de Postgres sea siempre invoice-automation-mvp_pgdata
+name: invoice-automation-mvp
+
 services:
   db:
     image: postgres:15-alpine
@@ -14,6 +17,12 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    # En servidores pequeños (p. ej. 4GB RAM), limitar para no saturar CPU/RAM
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "1.0"
 
   backend:
     build:
@@ -24,8 +33,7 @@ services:
     environment:
       # Sobrescribe solo si hace falta; DATABASE_URL debe coincidir con db (postgres:postgres)
       DATABASE_URL: postgresql://postgres:postgres@db:5432/invoice_automation
-      SECRET_KEY: change-me-in-production
-      JWT_SECRET_KEY: change-me-in-production
+      # SECRET_KEY y JWT_SECRET_KEY se leen de backend/.env (no sobrescribir aquí; deben ser ≥32 caracteres)
       ENCRYPTION_KEY: ${ENCRYPTION_KEY:-dGVzdC1rZXktMzItYnl0ZXMtbG9uZy0xMjM0NTY3ODkw}
     depends_on:
       db:

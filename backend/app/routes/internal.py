@@ -1,18 +1,20 @@
 """
-Rutas internas: sync de ventas (llamable por cron o scheduler).
+Rutas internas: sincronización de ventas (cron o scheduler).
 Protección: header X-Cron-Secret o solo localhost.
 """
-import os
 import logging
+import os
+
 from flask import Blueprint, request, jsonify
 
 from app.tasks.sync_sales import run_sync_sales
+from app.utils import err
 
 logger = logging.getLogger(__name__)
 internal_bp = Blueprint("internal", __name__)
 
 
-def _is_allowed():
+def _is_allowed() -> bool:
     secret = os.environ.get("CRON_SECRET")
     if secret:
         return request.headers.get("X-Cron-Secret") == secret
@@ -22,14 +24,14 @@ def _is_allowed():
 @internal_bp.route("/sync-sales", methods=["GET", "POST"])
 def sync_sales():
     """
-    Sincroniza ventas desde Falabella y Mercado Libre (crea Sales con platform y document_date).
-    Llamar cada 10 min por cron: curl -H "X-Cron-Secret: TU_SECRET" http://localhost:5000/internal/sync-sales
+    Sincroniza ventas desde Falabella y ML para todos los usuarios.
+    Llamar por cron cada 10 min:
+      curl -H "X-Cron-Secret: TU_SECRET" http://localhost:5000/internal/sync-sales
     """
     if not _is_allowed():
-        return jsonify({"error": "Forbidden"}), 403
+        return err("Forbidden", 403)
     try:
-        result = run_sync_sales()
-        return jsonify(result)
+        return jsonify(run_sync_sales())
     except Exception as e:
         logger.exception("sync_sales: %s", e)
-        return jsonify({"ok": False, "error": str(e)}), 500
+        return err(str(e), 500)

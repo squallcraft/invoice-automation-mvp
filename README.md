@@ -34,6 +34,27 @@ invoice-automation-mvp/
 
 ## Cómo correr en local
 
+### Opción rápida (script)
+
+Con PostgreSQL ya corriendo en `localhost:5432`:
+
+```bash
+./scripts/run-local.sh
+```
+
+Levanta backend (5000) y frontend (3000). Si Postgres no está instalado o no está activo:
+
+**Instalar y arrancar Postgres con Homebrew (macOS):**
+
+```bash
+brew install postgresql@15
+brew services start postgresql@15
+# En Mac con Apple Silicon, añade el binario al PATH para esta sesión:
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+createdb invoice_automation
+./scripts/run-local.sh
+```
+
 ### 1. Base de datos
 
 PostgreSQL en puerto 5432. Crear BD:
@@ -42,7 +63,13 @@ PostgreSQL en puerto 5432. Crear BD:
 createdb invoice_automation
 ```
 
-O con Docker solo para la BD:
+O con Docker solo para la BD (desde la raíz del proyecto):
+
+```bash
+docker compose up -d db
+```
+
+O un contenedor suelto:
 
 ```bash
 docker run -d --name pg -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=invoice_automation -p 5432:5432 postgres:15-alpine

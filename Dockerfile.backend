@@ -10,4 +10,6 @@ COPY backend/ .
 
 ENV FLASK_APP=app.app
 EXPOSE 5000
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app.app:create_app"]
+# 1 worker y timeout 120s para servidores pequeños y para que el arranque (conexión a DB) no haga timeout
+# app.app:app = instancia Flask en app/app.py (no la factory create_app)
+CMD ["gunicorn", "-w", "1", "--timeout", "120", "-b", "0.0.0.0:5000", "app.app:app"]
